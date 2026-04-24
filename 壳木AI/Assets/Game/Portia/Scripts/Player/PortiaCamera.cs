@@ -5,18 +5,18 @@ namespace Game.Portia
     public class PortiaCamera : MonoBehaviour
     {
         [SerializeField] Transform _target;
-        [SerializeField] float _distance     = 12f;
-        [SerializeField] float _minPitch     = 20f;
+        [SerializeField] float _distance     =  8f;
+        [SerializeField] float _minPitch     = 10f;
         [SerializeField] float _maxPitch     = 75f;
         [SerializeField] float _sensitivityX =  3f;
         [SerializeField] float _sensitivityY =  2f;
-        [SerializeField] float _heightOffset = 1.4f;
+        [SerializeField] float _heightOffset = 1.6f;
 
         [SerializeField] float _collisionRadius      = 0.25f;
         [SerializeField] float _collisionSmoothSpeed = 10f;
 
         float _yaw;
-        float _pitch = 45f;
+        float _pitch = 30f;
         Vector3 _currentCollisionOffset;
         readonly RaycastHit[] _collisionHits = new RaycastHit[8];
 

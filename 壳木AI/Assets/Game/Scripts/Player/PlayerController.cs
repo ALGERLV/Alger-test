@@ -21,8 +21,8 @@ namespace Game.Player
 
         [Header("Animation")]
         [SerializeField] Animator _animator;
-        // Maps Unity speed (units/s) to Anim_Tall_Man blend tree range [2.4 walk → 6.5 run → 8.5 fastrun]
-        [SerializeField] float _animSpeedScale = 1f;
+        [SerializeField] float _walkAnimSpeed   = 2.4f;   // blend tree threshold for walk
+        [SerializeField] float _sprintAnimSpeed = 6.5f;   // blend tree threshold for run/fastrun
 
         static readonly int _hashSpeed    = Animator.StringToHash("Speed");
         static readonly int _hashOnGround = Animator.StringToHash("OnGround");
@@ -164,13 +164,17 @@ namespace Game.Player
             Vector3 move = forward * v + right * h;
             if (move.magnitude > 1f) move.Normalize();
 
-            float speed = Input.GetKey(KeyCode.LeftShift) ? _sprintSpeed : _moveSpeed;
+            bool  sprinting = Input.GetKey(KeyCode.LeftShift);
+            float speed     = sprinting ? _sprintSpeed : _moveSpeed;
             _cc.Move(move * (speed * Time.deltaTime));
 
             if (move.sqrMagnitude > 0.01f && !ExternalRotation)
                 transform.forward = Vector3.Slerp(transform.forward, move, 10f * Time.deltaTime);
 
-            SetAnimatorFloat(_hashSpeed, move.magnitude * speed * _animSpeedScale);
+            float animSpeed = move.magnitude > 0.01f
+                ? (sprinting ? _sprintAnimSpeed : _walkAnimSpeed)
+                : 0f;
+            SetAnimatorFloat(_hashSpeed, animSpeed);
         }
 
         // SphereCast 覆盖整个脚底面积，斜面/不平地形均能检测

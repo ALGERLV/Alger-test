@@ -515,13 +515,15 @@ namespace Game.Portia
 
             var so = new SerializedObject(pc);
             var dist = so.FindProperty("_distance");
-            if (dist != null) dist.floatValue = 12f;
+            if (dist != null) dist.floatValue = 8f;
             var minP = so.FindProperty("_minPitch");
-            if (minP != null) minP.floatValue = 20f;
+            if (minP != null) minP.floatValue = 10f;
+            var heightOff = so.FindProperty("_heightOffset");
+            if (heightOff != null) heightOff.floatValue = 1.6f;
             so.ApplyModifiedProperties();
 
-            go.transform.position = playerTransform.position + new Vector3(0f, 10f, -9f);
-            go.transform.rotation = Quaternion.Euler(45f, 0f, 0f);
+            go.transform.position = playerTransform.position + new Vector3(0f, 5f, -8f);
+            go.transform.rotation = Quaternion.Euler(30f, 0f, 0f);
             return go;
         }
 
